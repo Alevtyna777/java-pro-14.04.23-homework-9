@@ -1,25 +1,36 @@
 package FileLoggerConfiguration;
 
 public class FileLoggerConfiguration {
+    private String filePath;
+    private LoggingLevel loggingLevel;
+    private long maxSize;
+    private String logFormat;
+
+    public FileLoggerConfiguration(String filePath, LoggingLevel loggingLevel, long maxSize, String logFormat) {
+        this.filePath = filePath;
+        this.loggingLevel = loggingLevel;
+        this.maxSize = maxSize;
+        this.logFormat = logFormat;
+    }
+
     public String getLogFilePath() {
-        return null;
+        return filePath;
     }
 
-    public boolean getLoggingLevel() {
-        boolean b = false;
-        boolean b1 = b;
-        return b1;
+    public LoggingLevel getLoggingLevel() {
+        return loggingLevel;
     }
-
-    public Object getMaxFileSize() {
-        return null;
+//getMaxFileSize
+    public long getMaxFileSize() {
+        return maxSize;
     }
-
-    public class FileLoggerConfigurationTest {
-
-    }
-
-
-    public static class FileLoggerConfiguration {
+//getLogFilePath
+    public String getLogFormat() {
+        return logFormat;
     }
 }
+
+
+
+
+

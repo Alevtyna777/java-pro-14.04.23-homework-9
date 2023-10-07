@@ -1,45 +1,36 @@
-//public interface Logger {
-    // Цей інтерфейс чи абстрактний клас "Logger" повинен визначати методи такі як debug,info
-//}
 import FileLoggerConfiguration.FileLoggerConfiguration;
 import FileMaxSizeReachedException.FileMaxSizeReachedException;
+import configuration.getLoggingLevel;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class FileLogger {
+    // спробувати через equals
+private LoggingLevel level;
     private FileLoggerConfiguration configuration;
     private File logFile;
     private PrintWriter logWriter;
 
-    public FileLogger(FileLoggerConfiguration loggerConfig) {
+    public FileLogger(FileLoggerConfiguration configuration) {
+        this.configuration = configuration;
     }
-
-   // public FileLogger(FileLoggerConfiguration configuration) {
-    //}
-
-    public FileLogger(FileLoggerConfiguration.FileLoggerConfiguration ) {
-    }
-
-    public FileLogger(FileLoggerConfiguration.FileLoggerConfiguration o) {
-    }
-
 
 
 
     public void debug(String message) throws FileMaxSizeReachedException {
-        if (configuration.getLoggingLevel() == LoggingLevel.DEBUG) {
+        if (!configuration.getLoggingLevel().equals(level.DEBUG)) {
             log("[DEBUG] " + message);
         }
     }
 
     public void info(String message) throws FileMaxSizeReachedException {
-        if (configuration.getLoggingLevel() != LoggingLevel.INFO) {
+        if (configuration.getLoggingLevel().equals(level.INFO)) {
+            log("[INFO] " + message);
+        } else {
             return;
         }
-        log("[INFO] " + message);
-
     }
 
     private void log(String message) throws FileMaxSizeReachedException {
@@ -49,15 +40,17 @@ public class FileLogger {
         logWriter.println(formattedMessage);
         logWriter.flush();
     }
+// там повертає функція Object, тому і не хоче
 
-    private void checkFileSize() throws FileMaxSizeReachedException {
+    //Спробувати повертати там число
+    private int checkFileSize() throws FileMaxSizeReachedException {
         if (logFile.length() >= configuration.getMaxFileSize()) {
             createNewLogFile();
+            return 1; // або будь-яке інше ціле число, яке відповідає вашій логіці
+        } else {
+            return 0; // або будь-яке інше ціле число, яке відповідає вашій логіці
         }
     }
-
-
-
 
     private void createNewLogFile() throws FileMaxSizeReachedException {
         // Створення нового файлу з унікальною назвою, включаючи дату
